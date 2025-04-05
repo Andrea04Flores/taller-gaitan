@@ -1,33 +1,37 @@
-// /pages/api/clientes.ts
+// /pages/api/clientes/[id].ts
 import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '@/lib/prisma';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    const { nombre, telefono, email, cedula } = req.body;
+  const { id } = req.query;
 
-    // Validar los campos
-    if (!nombre || !telefono || !email || !cedula) {
-      return res.status(400).json({ error: 'Todos los campos son requeridos' });
-    }
-
+  if (req.method === 'GET') {
     try {
-      // Crear un nuevo cliente
-      const cliente = await prisma.cliente.create({
-        data: {
-          nombre,
-          telefono,
-          email,
-          cedula,
+      const cliente = await prisma.cliente.findUnique({
+        where: { id: Number(id) },
+        include: {
+          vehiculos: {
+            include: {
+              diagnosticos: {
+                include: {
+                  presupuesto: true,
+                },
+              },
+            },
+          },
         },
       });
 
-      return res.status(201).json(cliente);
+      if (!cliente) {
+        return res.status(404).json({ error: 'Cliente no encontrado' });
+      }
+
+      return res.status(200).json(cliente);
     } catch (error) {
-      console.error('Error al crear cliente:', error);
-      return res.status(500).json({ error: 'Error interno del servidor' });
+      console.error('Error al obtener cliente:', error);
+      return res.status(500).json({ error: 'Error del servidor' });
     }
-  } else {
-    res.status(405).json({ error: 'Método no permitido' });
   }
+
+  res.status(405).json({ error: 'Método no permitido' });
 }

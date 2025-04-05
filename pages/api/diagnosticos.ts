@@ -14,8 +14,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const diagnostico = await prisma.diagnostico.create({
         data: {
           descripcion,
-          tipoServicio, // Añadir el nuevo campo
-          vehiculoId,   // Relación con el vehículo
+          tipoServicio, 
+          vehiculoId, 
         },
       });
 

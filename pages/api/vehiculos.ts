@@ -1,3 +1,4 @@
+// /pages/api/vehiculos.ts
 import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '@/lib/prisma';
 
@@ -5,13 +6,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'POST') {
     const { marca, modelo, placa, clienteId, color, año } = req.body;
 
-    // Validar los campos
     if (!marca || !modelo || !placa || !color || !año || !clienteId) {
       return res.status(400).json({ error: 'Todos los campos son requeridos' });
     }
 
     try {
-      // Crear un nuevo vehículo con relación al cliente
       const vehiculo = await prisma.vehiculo.create({
         data: {
           marca,
@@ -19,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           placa,
           color,
           año,
-          clienteId, // Relación con el cliente
+          clienteId,
         },
       });
 
@@ -32,8 +31,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       const vehiculos = await prisma.vehiculo.findMany({
         include: {
-          cliente: true, // Incluir la información del cliente relacionado
-          diagnosticos: true, // Incluir los diagnósticos del vehículo
+          cliente: true,
+          diagnosticos: {
+            include: {
+              presupuesto: true,
+            },
+          },
         },
       });
       return res.status(200).json(vehiculos);
