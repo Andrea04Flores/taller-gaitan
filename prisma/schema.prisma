@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EstadoPresupuesto {
+  PENDIENTE
+  APROBADO
+  RECHAZADO
+}
+
+model Cliente {
+  id         Int       @id @default(autoincrement())
+  nombre     String
+  telefono   String
+  email      String   @unique
+  cedula     String   @unique
+  vehiculos  Vehiculo[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Vehiculo {
+  id           Int       @id @default(autoincrement())
+  marca        String
+  modelo       String
+  placa        String    @unique
+  color        String    
+  año          Int      
+  clienteId    Int
+  cliente      Cliente   @relation(fields: [clienteId], references: [id])
+  diagnosticos Diagnostico[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Diagnostico {
+  id              Int       @id @default(autoincrement())
+  descripcion     String
+  tipoServicio    String    @default("Mantenimiento general") // Agregar valor predeterminado
+  vehiculoId      Int
+  vehiculo        Vehiculo  @relation(fields: [vehiculoId], references: [id])
+  presupuesto     Presupuesto?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Presupuesto {
+  id                Int               @id @default(autoincrement())
+  costoAproximado   Float
+  estado            EstadoPresupuesto @default(PENDIENTE)
+  descripcion       String            @default("Presupuesto general") // Agregar valor predeterminado
+  diagnosticoId     Int               @unique
+  diagnostico       Diagnostico       @relation(fields: [diagnosticoId], references: [id])
+  tiempoEstimado    Int               @default(1) // Valor predeterminado de 1 hora
+  piezasAReemplazar String[]          @default([]) // Lista vacía por defecto
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+}

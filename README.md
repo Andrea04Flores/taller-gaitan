@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚗 Taller Gaitán - Sistema de Gestión de Taller Mecánico
 
-## Getting Started
+Aplicación web desarrollada con **Next.js**, **Prisma** y **PostgreSQL** para gestionar clientes, vehículos, diagnósticos y presupuestos en un taller automotriz.
 
-First, run the development server:
+---
+
+## 📦 Tecnologías utilizadas
+
+- ⚡️ Next.js
+- 🧠 Prisma ORM
+- 🐘 PostgreSQL (Railway)
+- 🎨 Tailwind CSS
+- 📦 pnpm
+
+---
+
+## 🛠️ Funcionalidades principales
+
+- **Clientes**: Registro con nombre, teléfono, correo y cédula.
+- **Vehículos**: Relación con cliente, datos como marca, modelo, placa, año, color.
+- **Diagnósticos**: Descripción del problema y tipo de servicio (mecánica general, mantenimiento, eléctrico, etc.).
+- **Presupuestos**: Costo aproximado, tiempo estimado y estado (pendiente, aprobado o rechazado).
+
+---
+
+## 🚀 ¿Cómo empezar?
+
+### 1. Clona el repositorio
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+git clone https://github.com/tu-usuario/taller-gaitan.git
+cd taller-gaitan
+2. Instala dependencias
+pnpm install
+# o npm install / yarn install
+3. Configura las variables de entorno
+Crea un archivo .env en la raíz con el siguiente contenido:
+
+DATABASE_URL=postgresql://USUARIO:CONTRASEÑA@HOST:PUERTO/NOMBRE_DB
+4. Ejecuta las migraciones de Prisma
+npx prisma migrate dev
+5. Levanta el servidor de desarrollo
 pnpm dev
-# or
-bun dev
-```
+# o npm run dev / yarn dev
+Abre tu navegador en 👉 http://localhost:3000
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🧬 Estructura del proyecto
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+📁 prisma          → esquema de base de datos y migraciones
+📁 pages/api       → endpoints API (clientes, vehículos, etc.)
+📁 lib/prisma.ts   → cliente de Prisma
+📁 app/            → interfaz web y componentes
+🧪 Pruebas de API (Postman)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Puedes usar herramientas como Postman o Insomnia para probar los endpoints REST disponibles:
 
-## Learn More
+POST /api/clientes
+POST /api/vehiculos
+POST /api/diagnosticos
+POST /api/presupuestos
+GET /api/vehiculos, GET /api/clientes, etc.
+🛫 Despliegue
 
-To learn more about Next.js, take a look at the following resources:
+Puedes desplegar el proyecto fácilmente en Vercel o cualquier plataforma que soporte Next.js.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+📚 Recursos adicionales
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+📘 Documentación de Next.js
+🔧 Prisma ORM
+💅 Tailwind CSS
+📡 Railway (DB)
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+✨ Autor
+---
+Desarrollado con 💻 por Andrea Flores como proyecto de titulación.
+Contacto: marjories2001andrea04@gmail.com
+---
