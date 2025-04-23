@@ -19,7 +19,9 @@ Aplicación web desarrollada con **Next.js**, **Prisma** y **PostgreSQL** para g
 - **Clientes**: Registro con nombre, teléfono, correo y cédula.
 - **Vehículos**: Relación con cliente, datos como marca, modelo, placa, año, color.
 - **Diagnósticos**: Descripción del problema y tipo de servicio (mecánica general, mantenimiento, eléctrico, etc.).
-- **Presupuestos**: Costo aproximado, tiempo estimado y estado (pendiente, aprobado o rechazado).
+- **Proformas**: Costo aproximado, tiempo estimado y estado (pendiente, aprobada o rechazada).
+
+
 
 ---
 
